@@ -64,13 +64,8 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
           )
       );
     }
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(selectedMeal.title),
-      ),
-      body:
-      Column(children: <Widget>[
-        Container(
+    Widget _imageContainer(){
+      return Container(
           margin: EdgeInsets.all(10),
           height: 200,
           width: double.infinity,
@@ -80,7 +75,15 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
             fit: BoxFit.cover,
             ),
           ),
-        ),
+        );
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(selectedMeal.title),
+      ),
+      body:
+      Column(children: <Widget>[
+        _imageContainer(),
         Center(child: 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
