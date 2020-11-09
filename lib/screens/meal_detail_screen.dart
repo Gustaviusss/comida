@@ -77,14 +77,8 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
           ),
         );
     }
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(selectedMeal.title),
-      ),
-      body:
-      Column(children: <Widget>[
-        _imageContainer(),
-        Center(child: 
+    Widget _buttonsContainer(){
+      return Center(child: 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -94,15 +88,29 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
             _button('Steps',!widget.selectIngredients,(){setState(() {
               widget.selectIngredients = false;
             });})
-          ],),),
-        Container(
+          ],),);
+    }
+    Widget _titleContainer(){
+      return Container(
           margin: EdgeInsets.all(10),
           child: Center(
             child: Text(widget.selectIngredients?'Ingredients':'Steps',
-            style:TextStyle(fontSize: 24,fontWeight: FontWeight.bold)))),
-        _listContainer()
-
-      ])
+            style:TextStyle(fontSize: 24,fontWeight: FontWeight.bold))));
+    }
+    
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(selectedMeal.title),
+      ),
+      body:
+      Column(
+        children: <Widget>[
+          _imageContainer(),
+          _buttonsContainer(),
+          _titleContainer(),
+          _listContainer()
+       ]
+      )
       );
   }
 }
