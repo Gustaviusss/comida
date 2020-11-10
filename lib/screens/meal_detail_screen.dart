@@ -102,15 +102,14 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
       appBar: AppBar(
         title: Text(selectedMeal.title),
       ),
-      body:
-      Column(
+      body:Column(
         children: <Widget>[
           _imageContainer(),
           _buttonsContainer(),
           _titleContainer(),
           _listContainer()
-       ]
+        ]
       )
-      );
+    );
   }
 }
