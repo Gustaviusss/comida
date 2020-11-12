@@ -1,42 +1,75 @@
 import 'package:flutter/material.dart';
 
-import '../data/dummy_data.dart';
 import '../widgets/meal_item.dart';
+import '../models/meal.dart';
 
-class CategoryMealsScreen extends StatelessWidget {
+class CategoryMealsScreen extends StatefulWidget {
   static const routeName = '/category-meals';
-  // final String categoryId;
-  // final String categoryTitle;
-  // final Color color;
 
-  // CategoryMealsScreen(this.categoryId, this.categoryTitle, this.color);
+  final List<Meal> avaliableMeals;
+
+  CategoryMealsScreen(this.avaliableMeals);
+  @override
+  _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
+}
+
+class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
+  String categoryTitle;
+  List<Meal> displayedMeals;
+  bool loadedInitData = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    if(!loadedInitData){
+     final routeArgs =
+        ModalRoute.of(context).settings.arguments as Map<String, String>;
+    categoryTitle = routeArgs['title'];
+    final categoryId = routeArgs['id'];
+    displayedMeals = widget.avaliableMeals.where((meal) {
+      return meal.categories.contains(categoryId);
+    }).toList();
+    loadedInitData = true;
+    }
+    super.didChangeDependencies();
+    
+  }
+
+  void _removeMeal(String mealId){
+    setState(() {
+      displayedMeals.removeWhere((meal)=> meal.id == mealId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, String>;
-    final categoryTitle = routeArgs['title'];
-    final categoryId = routeArgs['id'];
-    final categoryMeals = DUMMY_MEALS.where((meal) {
-      return meal.categories.contains(categoryId);
-    }).toList();
+    
     // final categoryColor = routeArgs['color'];
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(categoryTitle),
         ),
-        body: ListView.builder(
+        body: 
+        // widget.avaliableMeals == null?
+        //   Column(children: <Widget>[
+        //     Icon(Icons.cloud_off, size: 100,color: Colors.grey,)
+        //   ],)
+        // :
+        ListView.builder(
             itemBuilder: (ctx, index) {
               return MealItem(
-                id: categoryMeals[index].id,
-                imageUrl: categoryMeals[index].imageUrl,
-                title: categoryMeals[index].title,
-                duration: categoryMeals[index].duration,
-                complexity: categoryMeals[index].complexity,
-                affordability: categoryMeals[index].affordability,
+                id: displayedMeals[index].id,
+                imageUrl: displayedMeals[index].imageUrl,
+                title: displayedMeals[index].title,
+                duration: displayedMeals[index].duration,
+                complexity: displayedMeals[index].complexity,
+                affordability: displayedMeals[index].affordability,
+                removeItem:_removeMeal,
               );
             },
-            itemCount: categoryMeals.length));
+            itemCount: displayedMeals.length));
   }
 }

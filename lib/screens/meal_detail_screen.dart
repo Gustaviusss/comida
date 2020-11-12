@@ -43,7 +43,7 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
     }
     Widget _listContainer(){
       return Container(
-          height: (mediaQuery.size.height - mediaQuery.padding.top)*0.4,
+          height: (mediaQuery.size.height - mediaQuery.padding.top)*0.35,
           width: 300,
           margin: EdgeInsets.all(5),
           padding: EdgeInsets.all(10),
@@ -113,7 +113,9 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.delete),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.of(context).pop(mealId);
+        },
       ),
     );
   }
