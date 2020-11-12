@@ -12,6 +12,7 @@ class MealDetailScreen extends StatefulWidget {
 class _MealDetailScreenState extends State<MealDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     final mealId = ModalRoute.of(context).settings.arguments as String;
     final selectedMeal = DUMMY_MEALS.firstWhere((meal)=>meal.id == mealId);
     
@@ -42,7 +43,7 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
     }
     Widget _listContainer(){
       return Container(
-          height: 230,
+          height: (mediaQuery.size.height - mediaQuery.padding.top)*0.4,
           width: 300,
           margin: EdgeInsets.all(5),
           padding: EdgeInsets.all(10),
@@ -109,7 +110,11 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
           _titleContainer(),
           _listContainer()
         ]
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete),
+        onPressed: (){},
+      ),
     );
   }
 }
