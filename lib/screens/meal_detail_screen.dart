@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import '../data/dummy_data.dart';
 class MealDetailScreen extends StatefulWidget {
   static const routeName = '/meal-details';
+  final Function toggleFavorite;
+  final Function isFavorite;
+  
+  MealDetailScreen(this.toggleFavorite,this.isFavorite);
+
   bool selectIngredients = true;
+
+ 
 
   @override
   _MealDetailScreenState createState() => _MealDetailScreenState();
@@ -12,11 +19,11 @@ class MealDetailScreen extends StatefulWidget {
 class _MealDetailScreenState extends State<MealDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    
     final mediaQuery = MediaQuery.of(context);
     final mealId = ModalRoute.of(context).settings.arguments as String;
     final selectedMeal = DUMMY_MEALS.firstWhere((meal)=>meal.id == mealId);
-    
-
+   
     Widget _button(String title, bool selected, Function func){
       return  GestureDetector(
         onTap: func, 
@@ -47,7 +54,10 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
           width: 300,
           margin: EdgeInsets.all(5),
           padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(border: Border.all(color: Colors.grey,width: 4),borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,width: 4),
+              borderRadius: BorderRadius.circular(10)),
           child: widget.selectIngredients
           ? ListView.builder(
             itemCount: selectedMeal.ingredients.length,
@@ -55,7 +65,11 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
                 color: Theme.of(context).primaryColor,
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-                  child: Text(selectedMeal.ingredients[index],style: TextStyle(color: Colors.white, fontSize: 20),)),))
+                  child: Text(
+                    selectedMeal.ingredients[index],
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20),)),))
           : ListView.builder(
             itemCount: selectedMeal.steps.length,
             itemBuilder:(ctx,index) => ListTile(
@@ -83,12 +97,18 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            _button('Ingredients',widget.selectIngredients,(){setState(() {
+            _button('Ingredients',widget.selectIngredients,(){
+              setState(() {
               widget.selectIngredients = true;
-            });}),
-            _button('Steps',!widget.selectIngredients,(){setState(() {
+            });
+            // print('$selectIngredients');
+            }),
+            _button('Steps',!widget.selectIngredients,(){
+              setState(() {
               widget.selectIngredients = false;
-            });})
+            });
+            // print('$selectIngredients');
+            })
           ],),);
     }
     Widget _titleContainer(){
@@ -102,6 +122,9 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(selectedMeal.title),
+        actions: <Widget>[
+          IconButton(icon:Icon(Icons.star_border), onPressed: ()=>widget.isFavorite(mealId))
+        ],
       ),
       body:Column(
         children: <Widget>[
@@ -111,12 +134,12 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
           _listContainer()
         ]
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
-        onPressed: (){
-          Navigator.of(context).pop(mealId);
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(
+      //     widget.toggleFavorite(mealId)? Icons.star : Icons.star_border
+      //     ),
+      //   onPressed: ()=> widget.isFavorite(mealId),
+      // ),
     );
   }
 }

@@ -37,11 +37,11 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
     
   }
 
-  void _removeMeal(String mealId){
-    setState(() {
-      displayedMeals.removeWhere((meal)=> meal.id == mealId);
-    });
-  }
+  // void _removeMeal(String mealId){
+  //   setState(() {
+  //     displayedMeals.removeWhere((meal)=> meal.id == mealId);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +53,17 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
           title: Text(categoryTitle),
         ),
         body: 
-        // widget.avaliableMeals == null?
-        //   Column(children: <Widget>[
-        //     Icon(Icons.cloud_off, size: 100,color: Colors.grey,)
-        //   ],)
-        // :
+        displayedMeals.length == 0?
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+            Icon(Icons.cloud_off,
+            size: 100,
+            color: Colors.grey,),
+            Text('Nothing Here.')
+          ],),)
+        :
         ListView.builder(
             itemBuilder: (ctx, index) {
               return MealItem(
@@ -67,7 +73,6 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
                 duration: displayedMeals[index].duration,
                 complexity: displayedMeals[index].complexity,
                 affordability: displayedMeals[index].affordability,
-                removeItem:_removeMeal,
               );
             },
             itemCount: displayedMeals.length));
