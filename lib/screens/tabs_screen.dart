@@ -29,7 +29,7 @@ class _TabsScreenState extends State<TabsScreen> {
     },
     {
       'page':FavoritesScreen(widget.favoriteMeals),
-      'title':'Your Favorites'
+      'title':'All Meals'
     }
   ];
      
@@ -65,8 +65,8 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.star),
-            title: Text('Favorites')
+            icon: Icon(Icons.receipt),
+            title: Text('All Meals')
           ),
           
         ],

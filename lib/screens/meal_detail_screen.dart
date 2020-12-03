@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../data/dummy_data.dart';
 class MealDetailScreen extends StatefulWidget {
   static const routeName = '/meal-details';
-  final Function toggleFavorite;
-  final Function isFavorite;
+  // final Function toggleFavorite;
+  // final Function isFavorite;
   
-  MealDetailScreen(this.toggleFavorite,this.isFavorite);
+  //MealDetailScreen(this.toggleFavorite,this.isFavorite);
 
   bool selectIngredients = true;
 
@@ -122,9 +122,9 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(selectedMeal.title),
-        actions: <Widget>[
-          IconButton(icon:Icon(Icons.star_border), onPressed: ()=>widget.isFavorite(mealId))
-        ],
+        // actions: <Widget>[
+        //   IconButton(icon:Icon(Icons.star_border), onPressed: ()=>widget.isFavorite(mealId))
+        // ],
       ),
       body:Column(
         children: <Widget>[
